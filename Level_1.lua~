@@ -1,0 +1,251 @@
+module(..., package.seeall)
+local utility = require("utility");
+local function addStars(stars_0, stars_1, stars_2, stars_3, numberOfStars,n)
+  if numberOfStars ==     0 then
+    stars_0.isVisible  =    true
+    stars_1.isVisible  =    false
+    stars_2.isVisible  =    false
+    stars_3.isVisible  =    false
+  end          
+  if numberOfStars == 1 then
+    stars_0.isVisible  =    false
+    stars_1.isVisible  =    true
+    stars_2.isVisible  =    false
+    stars_3.isVisible  =    false
+  end          
+  if numberOfStars == 2 then
+    stars_0.isVisible  =    false
+    stars_1.isVisible  =    false
+    stars_2.isVisible  =    true
+    stars_3.isVisible  =    false
+  end          
+  if numberOfStars == 3 then
+    stars_0.isVisible  =    false
+    stars_1.isVisible  =    false
+    stars_2.isVisible  =    false
+    stars_3.isVisible  =    true
+  end            
+
+  stars_0.x        =  n.x  
+  stars_0.y        =  n.y + stars_0.height/2;
+  stars_1.x        =  n.x  
+  stars_1.y        =  n.y + stars_0.height/2;
+  stars_2.x        =  n.x  
+  stars_2.y        =  n.y + stars_0.height/2;
+  stars_3.x        =  n.x
+  stars_3.y        =  n.y + stars_0.height/2;        
+end
+
+
+
+function new()
+  print "Hello Level 1 Page"
+
+  local localGroup = display.newGroup();
+
+  local level = 1
+  local round = 1
+  local stars_round_1 = 0
+  local stars_round_2 = 1
+  local stars_round_3 = 2
+  local stars_round_4 = 3
+  local stars_round_5 = 0
+  local stars_round_6 = 1
+  local i
+  local space = 48
+  --
+  local bg = utility.createImage("images/bg_a.png", _W, _H, 1);
+  localGroup:insert(bg);
+
+
+  local btn_back = utility.createImage("images/btn_back.png", _W, _H, 0.6);
+  utility.positionImageFromTop(btn_back , 30, 320);
+  localGroup:insert(btn_back);
+
+
+  local grass = utility.createImage("images/grass.png", _W, _H, 0.5);
+  utility.positionImageFromBottom(grass , 0, 0);
+  localGroup:insert(grass);			  
+
+
+  local pig = utility.createImage("images/pig.png", _W, _H, 0.4);
+  utility.positionImageFromBottom(pig , 10, -20);
+  localGroup:insert(pig);			 
+
+
+  local textLevel = utility.createImage("images/txt_Level1.png", _W, _H, 0.5);
+  utility.positionImageFromBottom(textLevel , 150, 280);
+  localGroup:insert(textLevel);			 
+
+
+
+  -- $$$##################################
+
+  local level_enabledGroup = display.newGroup();
+  local i	  
+  for i = 1, 6, 1 do
+    local level_enabled   = utility.createImage( "images/level_enabled.png" , _H, _W, 0.75);
+    if ( i <= 3 ) then
+      utility.positionImageFromBottom(level_enabled, (160 + i*72.75)  , 80)
+    elseif (i >= 4) then
+      utility.positionImageFromBottom(level_enabled, (160 + (i - 3)*72.75),  152)			                           
+    end
+    level_enabledGroup:insert(level_enabled);
+  end
+
+
+  for i = 1, 6, 1 do
+
+    local level_locked  = display.newImage("images/level_locked.png", _W, _H);
+    local level_selected  = display.newImage("images/level_selected.png", _W, _H);		
+    local stars_0 = display.newImage("images/stars_0.png", _W, _H);
+    local stars_1 = display.newImage("images/stars_1.png", _W, _H);
+    local stars_2 = display.newImage("images/stars_2.png", _W, _H);
+    local stars_3 = display.newImage("images/stars_3.png", _W, _H);
+    local imageName = "images/N_" .. i .. ".png";
+    local n = display.newImage(imageName, 0, 0); 
+
+    n.xScale = 0.75
+    n.yScale = 0.75
+    --level_enabled.xScale = 0.75
+    --level_enabled.yScale = 0.75
+    level_locked.xScale = 0.75
+    level_locked.yScale = 0.75
+    level_selected.xScale = 0.75
+    level_selected.yScale = 0.75
+    stars_0.xScale = 0.75
+    stars_0.yScale = 0.75
+    stars_1.xScale = 0.75
+    stars_1.yScale = 0.75
+    stars_2.xScale = 0.75
+    stars_2.yScale = 0.75
+    stars_3.xScale = 0.75
+    stars_3.yScale = 0.75
+    n.x =  _W/2 + ((i - 1) * (n.width * .8) - 80);
+    n.y =  _H/2 - n.height/1.2;
+    if i == 1 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 1  then 
+	level_locked.isVisible = false
+      end
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_1, n);
+    end
+
+
+
+    if i == 2 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 2 then 
+	level_locked.isVisible = false		  
+      end
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_2, n); 
+    end
+
+    if i == 3 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 3 then 
+	level_locked.isVisible = false
+
+      end
+
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_3, n); 
+    end
+
+    if i == 4 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 4 then 
+	level_locked.isVisible = false
+
+      end
+
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_4, n); 
+    end
+
+    if i == 5 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 5 then 
+	level_locked.isVisible = false
+
+      end
+
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_5, n); 
+    end
+
+    if i == 6 then
+      --level_enabled.x =   n.x;
+      --level_enabled.y =   n.y;
+      if round >= 6 then 
+	level_locked.isVisible = false
+
+      end
+
+      level_locked.x =    n.x;
+      level_locked.y =    n.y;
+      level_selected.x =  n.x;
+      level_selected.y =  n.y;
+      addStars(stars_0, stars_1, stars_2, stars_3, stars_round_6, n); 
+    end
+
+    localGroup:insert(level_selected);
+    --localGroup:insert(level_enabled_1);
+    localGroup:insert(n);
+    localGroup:insert(stars_0);
+    localGroup:insert(stars_1);
+    localGroup:insert(stars_2);
+    localGroup:insert(stars_3);
+    localGroup:insert(level_locked);
+  end
+
+
+
+  function go_to_R_1()
+    print ("GO-TO R_1")
+    --level_enabled_1.isVisible = false 
+    transition.to(pig, {time = 0, delay = 1000, x = -50})
+    transition.to(pig, {time = 3000, delay = 1000, x = -20 }) -- 100
+    timer.performWithDelay(4000,mm1,1)
+  end
+  function mm1()
+    director:changeScene("Level_1_R_1")
+    return true
+  end
+
+
+
+  function changeScene(e)
+    if(e.phase == "ended") then
+      director:changeScene(e.target.scene);	
+    end
+    return true
+  end
+  btn_back:       addEventListener("touch", changeScene)
+  --level_enabled_1:addEventListener("touch", changeScene)
+  return localGroup;
+end
+
